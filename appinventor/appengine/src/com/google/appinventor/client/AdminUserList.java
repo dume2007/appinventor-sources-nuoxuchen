@@ -42,7 +42,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.google.appinventor.client.Ode.MESSAGES;														 
 /**
  * A list of User elements used in the Admin interface
  *

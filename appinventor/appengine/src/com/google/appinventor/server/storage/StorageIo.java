@@ -656,32 +656,6 @@ public interface StorageIo {
   List<AdminUser> searchUsers(String partialEmail);
   void storeUser(AdminUser user) throws AdminInterfaceException;
 
-  List<String> listUsers();
-
-  long getUserLastVisited(String uid);
-
-  void removeUser(String uid);
-
-  void createGroup(String name);
-
-  void removeGroup(long gid);
-
-  long findGroupByName(String name);
-
-  List<Long> listGroups();
-
-  String getGroupName(long gid);
-
-  void setGroupName(long gid, String name);
-
-  List<Long> getUserGroups(String uid);
-
-  List<String> getGroupUsers(long gid);
-
-  void addUsersToGroup(long gid, List<String> list );
-
-  void removeUsersFromGroup(long gid, List<String> List);
-  
   /**
    * There are two kinds of backpacks. User backpacks, which are
    * stored with the user's personal files (which today is just the

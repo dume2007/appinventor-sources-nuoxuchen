@@ -134,7 +134,7 @@ public class TopPanel extends Composite {
       TextButton guideLink = new TextButton(MESSAGES.guideTabName());
       guideLink.addClickHandler(new WindowOpenClickHandler(guideUrl));
       guideLink.setStyleName("ode-TopPanelButton");
-      //links.add(guideLink);
+      links.add(guideLink);
     }
 
     // Feedback Link
@@ -144,7 +144,7 @@ public class TopPanel extends Composite {
       feedbackLink.addClickHandler(
         new WindowOpenClickHandler(feedbackUrl));
       feedbackLink.setStyleName("ode-TopPanelButton");
-      //links.add(feedbackLink);
+      links.add(feedbackLink);
     }
 
   /*
@@ -237,6 +237,24 @@ public class TopPanel extends Composite {
       nativeName = MESSAGES.SwitchToSimplifiedChinese();
     } else if (localeName == "zh_TW") {
       nativeName = MESSAGES.SwitchToTraditionalChinese();
+    } else if (localeName == "es_ES") {
+      nativeName = MESSAGES.SwitchToSpanish();
+    } else if (localeName == "fr_FR") {
+      nativeName = MESSAGES.SwitchToFrench();
+    } else if (localeName == "it_IT") {
+      nativeName = MESSAGES.SwitchToItalian();
+    } else if (localeName == "ru") {
+      nativeName = MESSAGES.SwitchToRussian();
+    } else if (localeName == "ko_KR") {
+      nativeName = MESSAGES.SwitchToKorean();
+    } else if (localeName == "sv") {
+      nativeName = MESSAGES.SwitchToSwedish();
+    } else if (localeName == "pt_BR") {
+      nativeName = MESSAGES.switchToPortugueseBR();
+    } else if (localeName == "pt") {
+      nativeName = MESSAGES.switchToPortuguese();
+    } else if (localeName == "nl") {
+      nativeName = MESSAGES.switchToDutch();
     }
     return nativeName;
   }

@@ -93,12 +93,6 @@
         <include name="media/*"/>
       </fileset>
     </copy>
-	<mkdir dir="${build.war.dir}/companions/" />
-	<copy todir="${build.war.dir}/companions/" flatten="true">
-      <fileset dir="${build.dir}/">
-        <include name="buildserver/*"/>
-      </fileset>
-	</copy>
     <copy file="${build.dir}/blocklyeditor/blockly-all.js" tofile="${build.war.dir}/WEB-INF/classes/com/google/appinventor/client/editor/youngandroid/blockly.js" />
     <copy todir="${build.war.dir}/">
       <fileset dir="${lib.dir}">
@@ -160,7 +154,6 @@
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${build.dir}/components/CommonConstants.jar"/>
     <!-- external libs -->
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/commons-fileupload/commons-fileupload-1.2.2.jar" />
-	<copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/commons-logging/commons-logging-1.2.jar" /><!--新增E:\AI47\appinventor-sources\appinventor\lib\commons-logging-->
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/findbugs/jsr305.jar" />
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/guava/guava-20.0.jar" />
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/firebase/firebase-token-generator-2.0.0.jar" />
@@ -180,11 +173,7 @@
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/google-http-client-jackson-1.22.0.jar" />
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/google-http-client-jackson2-1.22.0.jar" />
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/google-api-services-storage-v1-rev91-1.22.0.jar" />
-    <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/httpclient-4.5.5.jar" />
-	<copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/httpclient-cache-4.5.5.jar" />
-	<copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/httpclient-win-4.5.5.jar" />
-	<copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/httpcore-4.4.9.jar" />
-	<copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/httpmime-4.5.5.jar" />
+    <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/httpclient-4.0.1.jar" />
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/joda-time-2.6.jar" />
     <!-- gwt libs -->
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />

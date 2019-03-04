@@ -14,8 +14,7 @@ import com.googlecode.objectify.annotation.Unindexed;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;			 
+
 import javax.persistence.Id;
 
 /**
@@ -63,7 +62,6 @@ public class StoredData {
     // Path to template project passed as GET parameter
     String templatePath;
     boolean upgradedGCS;
-    public Set<Key<GroupData>> groups = new HashSet();
   }
 
   // Project properties
@@ -202,16 +200,6 @@ public class StoredData {
   }
 
   // MOTD data.
-  @Unindexed
-  public static final class GroupData {
-    @Id
-    public Long id;
-    @Indexed
-    public String name;
-    public Set<Key<UserData>> users = new HashSet();
-  }
-
-
   @Unindexed
   static final class MotdData {
     // Unique Id - for now we expect there to be only 1 MotdData object.

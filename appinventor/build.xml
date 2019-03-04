@@ -106,7 +106,6 @@
         <pathelement location="lib/android/tools/sdklib.jar"/>
         <pathelement location="lib/args4j/args4j-2.0.18.jar" />
         <pathelement location="lib/commons-fileupload/commons-fileupload-1.2.2.jar" />
-		<pathelement location="lib/commons-logging/commons-logging-1.2.jar" /><!--新增E:\AI47\appinventor-sources\appinventor\lib\commons-logging-->
         <pathelement location="lib/commons-io/commons-io-2.0.1.jar"/>
         <pathelement location="lib/findbugs/jsr305.jar" /> <!-- for javax.annotation.Nullable -->
         <pathelement location="lib/guava/guava-14.0.1.jar" />
@@ -124,8 +123,8 @@
         <pathelement location="lib/QRGenerator/javase.jar" />
         <fileset dir="buildserver/lib" includes="**/*.jar"/>
         <!-- Apache Http Libraries -->
-        <pathelement location="lib/apache-http/httpcore-4.4.9.jar" />
-        <pathelement location="lib/apache-http/httpmime-4.5.5.jar" />
+        <pathelement location="lib/apache-http/httpcore-4.3.2.jar" />
+        <pathelement location="lib/apache-http/httpmime-4.3.4.jar" />
         <!-- oauth libs -->
         <pathelement location="lib/oauth/google-api-client-1.10.3-beta.jar" />
         <pathelement location="lib/oauth/google-api-client-android2-1.10.3-beta.jar" />

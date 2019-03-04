@@ -12,7 +12,6 @@ import com.google.appengine.api.appidentity.AppIdentityServiceFailureException;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreInputStream;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
-import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.appengine.api.memcache.ErrorHandlers;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
@@ -36,7 +35,6 @@ import com.google.appinventor.server.storage.StoredData.ProjectData;
 import com.google.appinventor.server.storage.StoredData.PWData;
 import com.google.appinventor.server.storage.StoredData.SplashData;
 import com.google.appinventor.server.storage.StoredData.UserData;
-import com.google.appinventor.server.storage.StoredData.GroupData;
 import com.google.appinventor.server.storage.StoredData.UserFileData;
 import com.google.appinventor.server.storage.StoredData.UserProjectData;
 import com.google.appinventor.server.storage.StoredData.RendezvousData;
@@ -98,7 +96,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import java.util.Date;
 import java.util.UUID;
-import java.util.HashSet;
 
 import javax.annotation.Nullable;
 
@@ -198,7 +195,6 @@ public class ObjectifyStorageIo implements  StorageIo {
     ObjectifyService.register(PWData.class);
     ObjectifyService.register(SplashData.class);
     ObjectifyService.register(Backpack.class);
-    ObjectifyService.register(GroupData.class);
 
     // Learn GCS Bucket from App Configuration or App Engine Default
     String gcsBucket = Flag.createFlag("gcs.bucket", "").get();
@@ -2879,265 +2875,6 @@ public class ObjectifyStorageIo implements  StorageIo {
     }
   }
 
-  public List<String> listUsers() {
-    final List<String> result = new ArrayList();
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          QueryResultIterator it = ObjectifyService.begin().query(UserData.class).iterator();
-          while (it.hasNext()) {
-            result.add(((UserData) it.next()).id);
-          }
-        }
-      }, DEBUG);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return result;
-  }
-  public long getUserLastVisited(final String uid) {
-    final Result<Long> result = new Result();
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          UserData userData = (UserData) ObjectifyService.begin().find(ObjectifyStorageIo.this.userKey(uid));
-          if (userData != null && userData.visited != null) {
-            result.t = Long.valueOf(userData.visited.getTime());
-          }
-        }
-      }, true);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return result.t != null ? ((Long) result.t).longValue() : 0;
-  }
-
-  public void removeUser(final String uid) {
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          datastore = ObjectifyService.begin();
-          UserData userData = (UserData) datastore.find(ObjectifyStorageIo.this.userKey(uid));
-          if (userData != null) {
-            for (Key<GroupData> groupKey : userData.groups) {
-              GroupData groupData = (GroupData) datastore.find(groupKey);
-              if (groupData != null) {
-                groupData.users.remove(uid);
-                datastore.put(groupData);
-              }
-            }
-            datastore.delete(new Object[]{ObjectifyStorageIo.this.userKey(uid)});
-          }
-        }
-      }, true);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  public void createGroup(final String name) {
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          datastore = ObjectifyService.begin();
-          GroupData groupData = new GroupData();
-          groupData.id = null;
-          groupData.name = name;
-          groupData.users = new HashSet();
-          datastore.put(groupData);
-        }
-      }, true);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  public void removeGroup(final long gid) {
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          datastore = ObjectifyService.begin();
-          Key<GroupData> groupKey = new Key(GroupData.class, gid);
-          GroupData groupData = (GroupData) datastore.find(groupKey);
-          if (groupData != null) {
-            for (Key<UserData> userKey : groupData.users) {
-              UserData userData = (UserData) datastore.find(userKey);
-              if (userData != null) {
-                userData.groups.remove(groupKey);
-                datastore.put(userData);
-              }
-            }
-            datastore.delete(new Object[]{groupKey});
-          }
-        }
-      }, true);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  public long findGroupByName(final String name) {
-    final Result<Long> result = new Result();
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          GroupData groupData = (GroupData) ObjectifyService.begin().query(GroupData.class).filter("name", name).get();
-          if (groupData != null) {
-            result.t = groupData.id;
-          }
-        }
-      }, DEBUG);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return result.t != null ? ((Long) result.t).longValue() : 0;
-  }
-
-  public List<Long> listGroups() {
-    final List<Long> result = new ArrayList();
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          QueryResultIterator it = ObjectifyService.begin().query(GroupData.class).iterator();
-          while (it.hasNext()) {
-            result.add(((GroupData) it.next()).id);
-          }
-        }
-      }, DEBUG);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return result;
-  }
-
-  public String getGroupName(final long gid) {
-    final Result<String> result = new Result();
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          GroupData groupData = (GroupData) ObjectifyService.begin().find(new Key(GroupData.class, gid));
-          if (groupData != null) {
-            result.t = groupData.name;
-          }
-        }
-      }, DEBUG);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return (String) result.t;
-  }
-
-  public void setGroupName(final long gid, final String name) {
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          datastore = ObjectifyService.begin();
-          GroupData groupData = (GroupData) datastore.find(new Key(GroupData.class, gid));
-          if (groupData != null) {
-            groupData.name = name;
-            datastore.put(groupData);
-          }
-        }
-      }, true);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  public List<Long> getUserGroups(final String uid) {
-    final List<Long> result = new ArrayList();
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          datastore = ObjectifyService.begin();
-          for (Key<GroupData> groupKey : ((UserData) datastore.find(ObjectifyStorageIo.this.userKey(uid))).groups) {
-            GroupData groupData = (GroupData) datastore.find(groupKey);
-            if (groupData != null) {
-              result.add(groupData.id);
-            }
-          }
-        }
-      }, DEBUG);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return result;
-  }
-
-  public List<String> getGroupUsers(final long gid) {
-    final List<String> result = new ArrayList();
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          datastore = ObjectifyService.begin();
-          GroupData groupData = (GroupData) datastore.find(new Key(GroupData.class, gid));
-          if (groupData != null) {
-            for (Key<UserData> userKey : groupData.users) {
-              UserData userData = (UserData) datastore.find(userKey);
-              if (userData != null) {
-                result.add(userData.id);
-              }
-            }
-          }
-        }
-      }, DEBUG);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return result;
-  }
-
-  public void addUsersToGroup(final long gid, final List<String> users) {
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          datastore = ObjectifyService.begin();
-          Key<GroupData> groupKey = new Key(GroupData.class, gid);
-          GroupData groupData = (GroupData) datastore.find(groupKey);
-          if (groupData != null) {
-            for (String uid : users) {
-              Key<UserData> userKey = ObjectifyStorageIo.this.userKey(uid);
-              UserData userData = (UserData) datastore.find(userKey);
-              if (userData != null) {
-                userData.groups.add(groupKey);
-                groupData.users.add(userKey);
-                datastore.put(userData);
-              }
-            }
-            datastore.put(groupData);
-          }
-        }
-      }, true);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  public void removeUsersFromGroup(final long gid, final List<String> users) {
-    try {
-      runJobWithRetries(new JobRetryHelper() {
-        public void run(Objectify datastore) {
-          datastore = ObjectifyService.begin();
-          Key<GroupData> groupKey = new Key(GroupData.class, gid);
-          GroupData groupData = (GroupData) datastore.find(groupKey);
-          if (groupData != null) {
-            for (String uid : users) {
-              Key<UserData> userKey = ObjectifyStorageIo.this.userKey(uid);
-              UserData userData = (UserData) datastore.find(userKey);
-              if (userData != null) {
-                userData.groups.remove(groupKey);
-                groupData.users.remove(userKey);
-                datastore.put(userData);
-              }
-            }
-            datastore.put(groupData);
-          }
-        }
-      }, true);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
   /* Store a shared backpack.
    *
    * We only store backpacks in the datastore (cached in

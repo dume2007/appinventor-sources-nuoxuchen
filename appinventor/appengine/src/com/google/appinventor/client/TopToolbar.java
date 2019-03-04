@@ -41,7 +41,6 @@ import com.google.appinventor.shared.rpc.project.GallerySettings;
 import com.google.appinventor.shared.rpc.project.ProjectRootNode;
 import com.google.appinventor.shared.rpc.project.youngandroid.YoungAndroidProjectNode;
 import com.google.appinventor.shared.rpc.user.Config;
-import com.google.appinventor.shared.rpc.user.User;
 import com.google.appinventor.shared.storage.StorageUtil;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
@@ -113,12 +112,9 @@ public class TopToolbar extends Composite {
   private static final String WIDGET_NAME_IMPORT_COMPONENT = "ImportComponent";
   private static final String WIDGET_NAME_BUILD_COMPONENT = "BuildComponent";
   private static final String WIDGET_NAME_UPLOAD_COMPONENT = "UploadComponent";
-  private static final String WIDGET_NAME_REMOTE_PROJECT_UPLOAD = "RemoteProjectUpload";//新增
 
   private static final String WIDGET_NAME_ADMIN = "Admin";
-  private static final String WIDGET_NAME_USER_ADMIN = "UserAdmin";//新增
-  private static final String WIDGET_NAME_PROJECTS_ADMIN = "ProjectsAdmin";//新增
-  private static final String WIDGET_NAME_GROUPS_ADMIN = "GroupsAdmin";//新增
+  private static final String WIDGET_NAME_USER_ADMIN = "UserAdmin";
   private static final String WIDGET_NAME_DOWNLOAD_USER_SOURCE = "DownloadUserSource";
   private static final String WIDGET_NAME_SWITCH_TO_DEBUG = "SwitchToDebugPane";
   private static final String WINDOW_OPEN_FEATURES = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
@@ -191,18 +187,16 @@ public class TopToolbar extends Composite {
     fileItems.add(new DropDownItem(WIDGET_NAME_EXPORTALLPROJECTS, MESSAGES.exportAllProjectsMenuItem(),
         new ExportAllProjectsAction()));
     fileItems.add(null);
-//    if (!isReadOnly) {
-//      fileItems.add(new DropDownItem(WIDGET_NAME_UPLOAD_KEYSTORE, MESSAGES.uploadKeystoreMenuItem(),
-//          new UploadKeystoreAction()));
-//    }
-//    fileItems.add(new DropDownItem(WIDGET_NAME_DOWNLOAD_KEYSTORE, MESSAGES.downloadKeystoreMenuItem(),
-//        new DownloadKeystoreAction()));
-//    if (!isReadOnly) {
-//      fileItems.add(new DropDownItem(WIDGET_NAME_DELETE_KEYSTORE, MESSAGES.deleteKeystoreMenuItem(),
-//          new DeleteKeystoreAction()));
-//    }
-    fileItems.add(new DropDownItem(WIDGET_NAME_REMOTE_PROJECT_UPLOAD,MESSAGES.remoteProjectUploadMenuItem(),
-            new RemoteProjectUploadAction()));//新增
+    if (!isReadOnly) {
+      fileItems.add(new DropDownItem(WIDGET_NAME_UPLOAD_KEYSTORE, MESSAGES.uploadKeystoreMenuItem(),
+          new UploadKeystoreAction()));
+    }
+    fileItems.add(new DropDownItem(WIDGET_NAME_DOWNLOAD_KEYSTORE, MESSAGES.downloadKeystoreMenuItem(),
+        new DownloadKeystoreAction()));
+    if (!isReadOnly) {
+      fileItems.add(new DropDownItem(WIDGET_NAME_DELETE_KEYSTORE, MESSAGES.deleteKeystoreMenuItem(),
+          new DeleteKeystoreAction()));
+    }
 
     // Connect -> {Connect to Companion; Connect to Emulator; Connect to USB; Reset Connections}
     connectItems.add(new DropDownItem(WIDGET_NAME_WIRELESS_BUTTON,
@@ -257,49 +251,49 @@ public class TopToolbar extends Composite {
         new AboutAction()));
     helpItems.add(null);
     Config config = Ode.getInstance().getSystemConfig();
-//    String libraryUrl = config.getLibraryUrl();
-//    if (!Strings.isNullOrEmpty(libraryUrl)) {
-//      helpItems.add(new DropDownItem(WIDGET_NAME_LIBRARY, MESSAGES.libraryMenuItem(),
-//          new WindowOpenAction(libraryUrl)));
-//    }
-//    String getStartedUrl = config.getGetStartedUrl();
-//    if (!Strings.isNullOrEmpty(getStartedUrl)) {
-//      helpItems.add(new DropDownItem(WIDGET_NAME_GETSTARTED, MESSAGES.getStartedMenuItem(),
-//          new WindowOpenAction(getStartedUrl)));
-//    }
-//    String extensionsUrl = config.getExtensionsUrl();
-//    if (!Strings.isNullOrEmpty(extensionsUrl)) {
-//      helpItems.add(new DropDownItem(WIDGET_NAME_EXTENSIONS, MESSAGES.extensionsMenuItem(),
-//          new WindowOpenAction(extensionsUrl)));
-//    }
-//    String tutorialsUrl = config.getTutorialsUrl();
-//    if (!Strings.isNullOrEmpty(tutorialsUrl)) {
-//      helpItems.add(new DropDownItem(WIDGET_NAME_TUTORIALS, MESSAGES.tutorialsMenuItem(),
-//          new WindowOpenAction(tutorialsUrl)));
-//    }
-//    String troubleshootingUrl = config.getTroubleshootingUrl();
-//    if (!Strings.isNullOrEmpty(troubleshootingUrl)) {
-//      helpItems.add(new DropDownItem(WIDGET_NAME_TROUBLESHOOTING, MESSAGES.troubleshootingMenuItem(),
-//          new WindowOpenAction(troubleshootingUrl)));
-//    }
-//    String forumsUrl = config.getForumsUrl();
-//    if (!Strings.isNullOrEmpty(forumsUrl)) {
-//      helpItems.add(new DropDownItem(WIDGET_NAME_FORUMS, MESSAGES.forumsMenuItem(),
-//          new WindowOpenAction(forumsUrl)));
-//    }
-//    helpItems.add(null);
-//    String feedbackUrl = config.getFeedbackUrl();
-//    if (!Strings.isNullOrEmpty(feedbackUrl)) {
-//      helpItems.add(new DropDownItem(WIDGET_NAME_FEEDBACK, MESSAGES.feedbackMenuItem(),
-//          new WindowOpenAction(feedbackUrl)));
-//      helpItems.add(null);
-//    }
+    String libraryUrl = config.getLibraryUrl();
+    if (!Strings.isNullOrEmpty(libraryUrl)) {
+      helpItems.add(new DropDownItem(WIDGET_NAME_LIBRARY, MESSAGES.libraryMenuItem(),
+          new WindowOpenAction(libraryUrl)));
+    }
+    String getStartedUrl = config.getGetStartedUrl();
+    if (!Strings.isNullOrEmpty(getStartedUrl)) {
+      helpItems.add(new DropDownItem(WIDGET_NAME_GETSTARTED, MESSAGES.getStartedMenuItem(),
+          new WindowOpenAction(getStartedUrl)));
+    }
+    String extensionsUrl = config.getExtensionsUrl();
+    if (!Strings.isNullOrEmpty(extensionsUrl)) {
+      helpItems.add(new DropDownItem(WIDGET_NAME_EXTENSIONS, MESSAGES.extensionsMenuItem(),
+          new WindowOpenAction(extensionsUrl)));
+    }
+    String tutorialsUrl = config.getTutorialsUrl();
+    if (!Strings.isNullOrEmpty(tutorialsUrl)) {
+      helpItems.add(new DropDownItem(WIDGET_NAME_TUTORIALS, MESSAGES.tutorialsMenuItem(),
+          new WindowOpenAction(tutorialsUrl)));
+    }
+    String troubleshootingUrl = config.getTroubleshootingUrl();
+    if (!Strings.isNullOrEmpty(troubleshootingUrl)) {
+      helpItems.add(new DropDownItem(WIDGET_NAME_TROUBLESHOOTING, MESSAGES.troubleshootingMenuItem(),
+          new WindowOpenAction(troubleshootingUrl)));
+    }
+    String forumsUrl = config.getForumsUrl();
+    if (!Strings.isNullOrEmpty(forumsUrl)) {
+      helpItems.add(new DropDownItem(WIDGET_NAME_FORUMS, MESSAGES.forumsMenuItem(),
+          new WindowOpenAction(forumsUrl)));
+    }
+    helpItems.add(null);
+    String feedbackUrl = config.getFeedbackUrl();
+    if (!Strings.isNullOrEmpty(feedbackUrl)) {
+      helpItems.add(new DropDownItem(WIDGET_NAME_FEEDBACK, MESSAGES.feedbackMenuItem(),
+          new WindowOpenAction(feedbackUrl)));
+      helpItems.add(null);
+    }
     helpItems.add(new DropDownItem(WIDGET_NAME_COMPANIONINFO, MESSAGES.companionInformation(),
         new AboutCompanionAction()));
-//    helpItems.add(new DropDownItem(WIDGET_NAME_COMPANIONUPDATE, MESSAGES.companionUpdate(),
-//        new CompanionUpdateAction()));
-//    helpItems.add(new DropDownItem(WIDGET_NAME_SHOWSPLASH, MESSAGES.showSplashMenuItem(),
-//        new ShowSplashAction()));
+    helpItems.add(new DropDownItem(WIDGET_NAME_COMPANIONUPDATE, MESSAGES.companionUpdate(),
+        new CompanionUpdateAction()));
+    helpItems.add(new DropDownItem(WIDGET_NAME_SHOWSPLASH, MESSAGES.showSplashMenuItem(),
+        new ShowSplashAction()));
 
     // Create the TopToolbar drop down menus.
     fileDropDown = new DropDownButton(WIDGET_NAME_PROJECT, MESSAGES.projectsTabName(),
@@ -328,16 +322,12 @@ public class TopToolbar extends Composite {
     //Only if logged in as an admin, add the Admin Button
     if (Ode.getInstance().getUser().getIsAdmin()) {
       List<DropDownItem> adminItems = Lists.newArrayList();
-//      adminItems.add(new DropDownItem(WIDGET_NAME_DOWNLOAD_USER_SOURCE,
-//          MESSAGES.downloadUserSourceMenuItem(), new DownloadUserSourceAction()));
-//      adminItems.add(new DropDownItem(WIDGET_NAME_SWITCH_TO_DEBUG,
-//          MESSAGES.switchToDebugMenuItem(), new SwitchToDebugAction()));
+      adminItems.add(new DropDownItem(WIDGET_NAME_DOWNLOAD_USER_SOURCE,
+          MESSAGES.downloadUserSourceMenuItem(), new DownloadUserSourceAction()));
+      adminItems.add(new DropDownItem(WIDGET_NAME_SWITCH_TO_DEBUG,
+          MESSAGES.switchToDebugMenuItem(), new SwitchToDebugAction()));
       adminItems.add(new DropDownItem(WIDGET_NAME_USER_ADMIN,
-          MESSAGES.UserAdmin(), new SwitchToUserAdminAction()));
-      adminItems.add(new DropDownItem(WIDGET_NAME_PROJECTS_ADMIN,
-          MESSAGES.ProjectsAdmin(),new SwitchToProjectAdminAction()));//新增
-      adminItems.add(new DropDownItem(WIDGET_NAME_GROUPS_ADMIN,
-          MESSAGES.GroupsAdmin(),new SwitchToGroupsAction()));//新增
+          "User Admin", new SwitchToUserAdminAction()));
       adminDropDown = new DropDownButton(WIDGET_NAME_ADMIN, MESSAGES.adminTabName(), adminItems,
           false);
       adminDropDown.setStyleName("ode-TopPanelButton");
@@ -756,17 +746,6 @@ public class TopToolbar extends Composite {
     }
   }
 
-  private class RemoteProjectUploadAction implements Command
-  {
-    public void execute(){
-      User user = Ode.getInstance().getUser();
-      try{
-        Window.Location.replace("/ProjectUpload.jsp?uid=" + user.getUserId());
-      }
-      catch (Exception ex){}
-    }
-  }
-//新增
   /**
    *  Made changes to the now Projects menu made name changes to the menu items
    * Implements the action to generate the ".yail" file for each screen in the current project.
@@ -1094,69 +1073,25 @@ public class TopToolbar extends Composite {
   }
 
   //Admin commands
-//  private static class DownloadUserSourceAction implements Command {														   
-//    @Override
-//    public void execute() {
-//      new DownloadUserSourceWizard().center();
-//			
-//												 
-//							   
-//	   
-//    }
-//  }
-//
-//  private static class SwitchToDebugAction implements Command {
-//    @Override
-//    public void execute() {
-//      Ode.getInstance().switchToDebuggingView();
-//			
-//													
-//							   
-//	   
-//    }
-//  }
-//
-//  private static class SwitchToUserAdminAction implements Command {
-//    @Override
-//    public void execute() {
-//      Ode.getInstance().switchToUserAdminPanel();
-//			
-//												  
-//							   
-//	   
-//    }
-//  }
+  private static class DownloadUserSourceAction implements Command {
+    @Override
+    public void execute() {
+      new DownloadUserSourceWizard().center();
+    }
+  }
+
+  private static class SwitchToDebugAction implements Command {
+    @Override
+    public void execute() {
+      Ode.getInstance().switchToDebuggingView();
+    }
+  }
 
   private static class SwitchToUserAdminAction implements Command {
     @Override
     public void execute() {
-      if(Ode.getInstance().getUser().getIsAdmin()){
-        try{
-          Window.Location.replace("/usersadmin");
-        }catch (Exception ex){}
-      }
+      Ode.getInstance().switchToUserAdminPanel();
     }
   }
 
-  private  static class SwitchToProjectAdminAction implements Command{
-    @Override
-    public void execute() {
-      if(Ode.getInstance().getUser().getIsAdmin()){
-        try{
-          Window.Location.replace("/projectsadmin");
-        }catch (Exception ex){}
-      }
-    }
-  }
-  private static class SwitchToGroupsAction implements  Command{
-																   
-    @Override
-    public void execute() {
-      if(Ode.getInstance().getUser().getIsAdmin()){
-        try{
-          Window.Location.replace("/groupsadmin");
-        }catch (Exception ex){}
-      }
-    }
-  }
 }
