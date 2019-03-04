@@ -35,7 +35,31 @@
 
   <!-- Security constraints: require login for these urls -->
   <!-- This is how we implement Google Account login -->
+  <security-constraint>
+    <web-resource-collection>
+      <url-pattern>/login/google</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>*</role-name>
+    </auth-constraint>
+  </security-constraint>
 
+  <security-constraint>
+    <web-resource-collection>
+      <url-pattern>/_ah/admin</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+    </auth-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
+      <url-pattern>/_ah/login</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+    </auth-constraint>
+  </security-constraint>
+  
   <security-constraint>
     <web-resource-collection>
       <url-pattern>/login/google</url-pattern>
@@ -389,5 +413,87 @@
     <filter-name>odeAuthFilter</filter-name>
     <servlet-name>componentService</servlet-name>
   </filter-mapping>
+
+  <servlet>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>com.google.appinventor.server.UserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/api/user/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>FileServlet</servlet-name>
+    <servlet-class>com.google.appinventor.server.FileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileServlet</servlet-name>
+    <url-pattern>/api/file/*</url-pattern>
+  </servlet-mapping>
+  
+  <filter>
+    <filter-name>AdminIPFilter</filter-name>
+    <filter-class>com.google.appinventor.server.AdminIPFilter</filter-class>
+  </filter>
+  
+  <servlet>
+    <servlet-name>AdminServlet</servlet-name>
+    <servlet-class>com.google.appinventor.server.AdminServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminServlet</servlet-name>
+    <url-pattern>/api/admin/*</url-pattern>
+  </servlet-mapping>
+  <filter-mapping>
+    <filter-name>AdminIPFilter</filter-name>
+    <servlet-name>AdminServlet</servlet-name>
+  </filter-mapping>
+  
+  <servlet>
+    <servlet-name>RemoteUploadServlet</servlet-name>
+    <servlet-class>com.google.appinventor.server.RemoteUploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoteUploadServlet</servlet-name>
+    <url-pattern>/api/remoteUpload/*</url-pattern>
+  </servlet-mapping>
+ 
+  <servlet>
+	<servlet-name>adminusers</servlet-name>
+	<jsp-file>/WEB-INF/admin/users.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>adminusers</servlet-name>
+	<url-pattern>/usersadmin</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+	<servlet-name>admingroups</servlet-name>
+	<jsp-file>/WEB-INF/admin/groups.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>admingroups</servlet-name>
+	<url-pattern>/groupsadmin</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+	<servlet-name>adminprojects</servlet-name>
+	<jsp-file>/WEB-INF/admin/projects.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>adminprojects</servlet-name>
+	<url-pattern>/projectsadmin</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+	<servlet-name>adminProjectUpload</servlet-name>
+	<jsp-file>/WEB-INF/admin/ProjectUpload.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>adminProjectUpload</servlet-name>
+	<url-pattern>/ProjectUpload</url-pattern>
+  </servlet-mapping>
+    
 
 </web-app>

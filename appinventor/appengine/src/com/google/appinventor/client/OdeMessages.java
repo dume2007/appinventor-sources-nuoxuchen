@@ -741,6 +741,9 @@ public interface OdeMessages extends Messages {
   @Description("Label of the button for admins to switch to the debug panel without an explicit error")
   String switchToDebugMenuItem();
 
+  @DefaultMessage("User Admin")
+  @Description("UserAdmin")
+  String UserAdmin();
   //Tabs
   @DefaultMessage("My Projects")
   @Description("Name of My Projects tab")
