@@ -97,7 +97,7 @@ public class LoginServlet extends HttpServlet {
     // were not logged in.
     String locale = params.get("locale");
     if (locale == null) {
-      locale = "en";
+      locale = "zh_CN";
     }
     String repo = params.get("repo");
     String galleryId = params.get("galleryId");
@@ -113,7 +113,7 @@ public class LoginServlet extends HttpServlet {
       // This is arranged via a security-constraint setup in web.xml
       com.google.appengine.api.users.User apiUser = userService.getCurrentUser();
       if (apiUser == null) {  // Hmmm. I don't think this should happen
-        fail(req, resp, "Google Authentication Failed"); // Not sure what else to do
+        fail(req, resp, bundle.getString("googleauthenticationfailed")); // Not sure what else to do
         return;
       }
       String email = apiUser.getEmail();
@@ -178,12 +178,12 @@ public class LoginServlet extends HttpServlet {
     if (page.equals("setpw")) {
       String uid = getParam(req);
       if (uid == null) {
-        fail(req, resp, "Invalid Set Password Link");
+        fail(req, resp, bundle.getString("invalidsetpasswordlink"));
         return;
       }
       PWData data = storageIo.findPWData(uid);
       if (data == null) {
-        fail(req, resp, "Invalid Set Password Link");
+        fail(req, resp, bundle.getString("invalidsetpasswordlink"));
         return;
       }
       if (DEBUG) {
@@ -228,6 +228,7 @@ public class LoginServlet extends HttpServlet {
     String emailAddress = bundle.getString("emailaddress");
     String password = bundle.getString("password");
     String login = bundle.getString("login");
+	String register = bundle.getString("register");
     String passwordclickhere = bundle.getString("passwordclickhere");
 
     req.setCharacterEncoding("UTF-8");
@@ -243,11 +244,12 @@ public class LoginServlet extends HttpServlet {
     req.setAttribute("localeLabel", locale);
     req.setAttribute("pleaselogin", bundle.getString("pleaselogin"));
     req.setAttribute("login", bundle.getString("login"));
+	req.setAttribute("register", bundle.getString("register"));
     req.setAttribute("repo", repo);
     req.setAttribute("locale", locale);
     req.setAttribute("galleryId", galleryId);
     try {
-      req.getRequestDispatcher("/login.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
     } catch (ServletException e) {
       throw new IOException(e);
     }
@@ -279,7 +281,7 @@ public class LoginServlet extends HttpServlet {
     String redirect = params.get("redirect");
 
     if (locale == null) {
-      locale = "en";
+      locale = "zh_CN";
     }
 
     ResourceBundle bundle = ResourceBundle.getBundle("com/google/appinventor/server/loginmessages", new Locale(locale));
@@ -290,13 +292,13 @@ public class LoginServlet extends HttpServlet {
     if (page.equals("sendlink")) {
       String email = params.get("email");
       if (email == null) {
-        fail(req, resp, "No Email Address Provided");
+        fail(req, resp, bundle.getString("noemailaddressprovided"));
         return;
       }
       // Send email here, for now we put it in the error string and redirect
       PWData pwData = storageIo.createPWData(email);
       if (pwData == null) {
-        fail(req, resp, "Internal Error");
+        fail(req, resp, bundle.getString("internalerror"));
         return;
       }
       String link = trimPage(req) + pwData.id + "/setpw";
@@ -306,7 +308,7 @@ public class LoginServlet extends HttpServlet {
       return;
     } else if (page.equals("setpw")) {
       if (userInfo == null || userInfo.getUserId().equals("")) {
-        fail(req, resp, "Session Timed Out");
+        fail(req, resp, bundle.getString("sessiontimedout"));
         return;
       }
       User user = storageIo.getUser(userInfo.getUserId());
@@ -319,10 +321,10 @@ public class LoginServlet extends HttpServlet {
       try {
         hashedPassword = PasswordHash.createHash(password);
       } catch (NoSuchAlgorithmException e) {
-        fail(req, resp, "System Error hashing password");
+        fail(req, resp, bundle.getString("systemerrorhashingpassword"));
         return;
       } catch (InvalidKeySpecException e) {
-        fail(req, resp, "System Error hashing password");
+        fail(req, resp, bundle.getString("systemerrorhashingpassword"));
         return;
       }
 
@@ -336,13 +338,23 @@ public class LoginServlet extends HttpServlet {
     }
 
     String email = params.get("email");
+	String userid = null;
+	try{
+		userid = storageIo.findUserByEmail(email);
+	}
+	catch (Exception localException){}
+	if (userid == null)
+	{
+		fail(req, resp, bundle.getString("accountnotregistered"));
+		return;
+	}
     String password = params.get("password"); // We don't check it now
     User user = storageIo.getUserFromEmail(email);
     boolean validLogin = false;
 
     String hash = user.getPassword();
     if ((hash == null) || hash.equals("")) {
-      fail(req, resp, "No Password Set for User");
+      fail(req, resp, bundle.getString("nopasswordsetforuser"));
       return;
     }
 
@@ -427,7 +439,7 @@ public class LoginServlet extends HttpServlet {
   }
 
   private void fail(HttpServletRequest req, HttpServletResponse resp, String error) throws IOException {
-    resp.sendRedirect("/login/?error=" + sanitizer.sanitize(error));
+    resp.sendRedirect("/login/?error=" + URLEncoder.encode(error,"UTF-8"));
     return;
   }
 

@@ -741,6 +741,9 @@ public interface OdeMessages extends Messages {
   @Description("Label of the button for admins to switch to the debug panel without an explicit error")
   String switchToDebugMenuItem();
 
+  @DefaultMessage("User Admin")
+  @Description("UserAdmin")
+  String UserAdmin();
   //Tabs
   @DefaultMessage("My Projects")
   @Description("Name of My Projects tab")
@@ -7073,4 +7076,18 @@ public interface OdeMessages extends Messages {
       "<br/>These applications will not run on Android versions older than 4.0.")
   @Description("Text for the Package SDK 26 Warning Dialog Box (HTML)")
   String Package26Notice();
+  
+  @DefaultMessage("Remote Project Upload")
+  @Description("remoteProjectUpload")
+  String remoteProjectUploadMenuItem();
+
+  @DefaultMessage("ProjectsAdmin")
+																   
+  @Description("ProjectsAdmin")
+  String ProjectsAdmin();
+
+  @DefaultMessage("GroupsAdmin")
+																				 
+  @Description("GroupsAdmin")
+  String GroupsAdmin();
 }
