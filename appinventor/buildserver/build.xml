@@ -94,6 +94,7 @@
     <copy toFile="${classes.files.dir}/google-oauth-client-beta.jar" file="${lib.dir}/oauth/google-oauth-client-1.10.1-beta.jar" />
     <copy toFile="${classes.files.dir}/jedis.jar" file="${lib.dir}/jedis/jedis-3.0.0-SNAPSHOT-jar-with-dependencies.jar" />
     <copy toFile="${classes.files.dir}/commons-pool.jar" file="${lib.dir}/commons-pool/commons-pool2-2.0.jar" />
+	<copy toFile="${classes.files.dir}/commons-logging-1.2.jar" file="${lib.dir}/commons-logging/commons-logging-1.2.jar" />
     <copy toFile="${classes.files.dir}/guava-14.0.1.jar" file="${lib.dir}/guava/guava-14.0.1.jar" />
     <copy toFile="${classes.files.dir}/core.jar" file="${lib.dir}/QRGenerator/core.jar" />
     <!-- BEGIN Android Support Libraries -->
@@ -164,6 +165,7 @@
       <fileset dir="${lib.dir}" includes="ecj/ecj-4.5.1.jar"/>
       <fileset dir="${lib.dir}" includes="guava/guava-14.0.1.jar"/>
       <fileset dir="${lib.dir}" includes="commons-io/commons-io-2.0.1.jar"/>
+	  <fileset dir="${lib.dir}" includes="commons-logging/commons-logging-1.2.jar"/>
       <fileset dir="${lib.dir}" includes="args4j/args4j-2.0.18.jar"/>
       <fileset dir="${lib.dir}" includes="json/json.jar" />
     </copy>
@@ -321,6 +323,7 @@
     <pathelement location="${lib.dir}/kawa/kawa-1.11-modified.jar" />
     <pathelement location="${lib.dir}/guava/guava-14.0.1.jar" />
     <pathelement location="${lib.dir}/commons-io/commons-io-2.0.1.jar" />
+	<pathelement location="${lib.dir}/commons-logging/commons-logging-1.2.jar" />
     <pathelement location="${lib.dir}/json/json.jar" />
     <pathelement location="${lib.dir}/junit/junit-4.8.2.jar" />
   </path>
