@@ -80,8 +80,8 @@
     <copy toFile="${classes.files.dir}/acra-4.4.0.jar" file="${lib.dir}/acra/acra-4.4.0.jar" />
     <copy toFile="${classes.files.dir}/twitter4j.jar" file="${lib.dir}/twitter/twitter4j-core-3.0.5.jar" />
     <copy toFile="${classes.files.dir}/twitter4jmedia.jar" file="${lib.dir}/twitter/twitter4j-media-support-3.0.5.jar" />
-    <copy toFile="${classes.files.dir}/httpcore-4.3.2.jar" file="${lib.dir}/apache-http/httpcore-4.3.2.jar" />
-    <copy toFile="${classes.files.dir}/httpmime-4.3.4.jar" file="${lib.dir}/apache-http/httpmime-4.3.4.jar" />
+    <copy toFile="${classes.files.dir}/httpcore-4.4.9.jar" file="${lib.dir}/apache-http/httpcore-4.4.9.jar" />
+    <copy toFile="${classes.files.dir}/httpmime-4.5.5.jar" file="${lib.dir}/apache-http/httpmime-4.5.5.jar" />
     <copy toFile="${classes.files.dir}/fusiontables.jar" file="${lib.dir}/fusiontables/fusiontables.jar" />
     <copy toFile="${classes.files.dir}/firebase.jar" file="${lib.dir}/firebase/firebase-client-android-2.5.0.jar" />
     <copy toFile="${classes.files.dir}/google-api-client-beta.jar" file="${lib.dir}/oauth/google-api-client-1.10.3-beta.jar" />
@@ -214,7 +214,7 @@
        ===================================================================== -->
   <target name="CheckPlayApp"
           depends="GenPlayAppSrcZip,BuildServer">
-    <uptodate property="PlayApp.uptodate" targetfile="${public.build.dir}/MIT AI2 Companion.apk">
+    <uptodate property="PlayApp.uptodate" targetfile="${public.build.dir}/MITAI2Companion.apk">
       <srcfiles file="${local.build.dir}/aiplayapp.zip"/>
       <srcfiles dir="${run.lib.dir}" includes="*.jar"/>
     </uptodate>
@@ -255,7 +255,7 @@
       <arg line="uninstall edu.mit.appinventor.aicompanion3" />
     </exec>
     <exec executable="adb" failonerror="true">
-      <arg line='install "${public.build.dir}/MIT AI2 Companion.apk"' />
+      <arg line='install "${public.build.dir}/MITAI2Companion.apk"' />
     </exec>
   </target>
 
