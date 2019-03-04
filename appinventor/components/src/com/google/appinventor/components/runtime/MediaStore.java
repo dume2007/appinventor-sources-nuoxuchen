@@ -68,8 +68,8 @@ import java.net.URL;
     iconName = "images/mediastore.png")
 @SimpleObject
 @UsesPermissions(permissionNames = "android.permission.INTERNET")
-@UsesLibraries(libraries = "httpcore-4.3.2.jar," +
-                           "httpmime-4.3.4.jar")
+@UsesLibraries(libraries = "httpcore-4.4.9.jar," +
+                           "httpmime-4.5.5.jar")
 
 public final class MediaStore extends AndroidNonvisibleComponent implements Component {
   protected final ComponentContainer componentContainer;
