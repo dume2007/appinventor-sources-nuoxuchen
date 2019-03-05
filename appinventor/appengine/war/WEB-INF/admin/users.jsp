@@ -38,7 +38,7 @@
     </head>
     <body>
         <script>
-            const root = "http://192.168.11.187:8888";
+            const root = "http://192.168.0.4:8888";
             var groups = {};
             // checkbox集合
             var cb = [];
