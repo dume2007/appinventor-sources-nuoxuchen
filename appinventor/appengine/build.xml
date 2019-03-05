@@ -173,7 +173,7 @@
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/google-http-client-jackson-1.22.0.jar" />
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/google-http-client-jackson2-1.22.0.jar" />
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/google-api-services-storage-v1-rev91-1.22.0.jar" />
-    <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/httpclient-4.0.1.jar" />
+    
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/gcs/joda-time-2.6.jar" />
     <!-- gwt libs -->
 	
@@ -182,7 +182,7 @@
 	<copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/apache-http/httpclient-win-4.5.7.jar" />
 	<copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/apache-http/httpcore-4.4.11.jar" />
 	<copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/apache-http/httpmime-4.5.7.jar" />
-	
+	<copy todir="${build.war.dir}/WEB-INF/lib" file="${lib.dir}/commons-logging/commons-logging-1.2.jar" />
 	
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />
     <copy todir="${build.war.dir}/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet-deps.jar" />
