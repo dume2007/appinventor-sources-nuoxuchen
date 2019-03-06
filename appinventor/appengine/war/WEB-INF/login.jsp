@@ -100,8 +100,13 @@
 				</div>
 			</div>
 		<script>
+		<%
+			String  realPath  =  "\"" + "http://"  +  request.getServerName()  +  ":"  +  request.getServerPort() +"\"" ;  
+			System.out.println(realPath);
+		%>
             $(()=>{
-                const root = "http://127.0.0.1:8888";
+                const root = 
+				<%=realPath%>
                 $("#register").click(()=>{
                     $.ajax({
                         type: "POST",

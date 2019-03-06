@@ -35,7 +35,12 @@
     </head>
     <body>
         <script>
-            const root = "http://192.168.0.4:8888";
+		<%
+			String  realPath  =  "\"" + "http://"  +  request.getServerName()  +  ":"  +  request.getServerPort() +"\"" ;  
+			System.out.println(realPath);
+		%>
+            const root = 
+			<%=realPath%>
             var selected;
             
             function init(){
