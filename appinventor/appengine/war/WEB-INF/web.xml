@@ -432,11 +432,6 @@
     <url-pattern>/api/file/*</url-pattern>
   </servlet-mapping>
   
-  <filter>
-    <filter-name>AdminIPFilter</filter-name>
-    <filter-class>com.google.appinventor.server.AdminIPFilter</filter-class>
-  </filter>
-  
   <servlet>
     <servlet-name>AdminServlet</servlet-name>
     <servlet-class>com.google.appinventor.server.AdminServlet</servlet-class>
@@ -445,11 +440,7 @@
     <servlet-name>AdminServlet</servlet-name>
     <url-pattern>/api/admin/*</url-pattern>
   </servlet-mapping>
-  <filter-mapping>
-    <filter-name>AdminIPFilter</filter-name>
-    <servlet-name>AdminServlet</servlet-name>
-  </filter-mapping>
-  
+
   <servlet>
     <servlet-name>RemoteUploadServlet</servlet-name>
     <servlet-class>com.google.appinventor.server.RemoteUploadServlet</servlet-class>
