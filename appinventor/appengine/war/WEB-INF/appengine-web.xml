@@ -181,7 +181,7 @@
     <property name="feedback.url" value="http://something.example.com" />
     <property name="release.notes.url" value="http://appinventor.mit.edu/ai2/ReleaseNotes.html" />
     <property name="tos.url" value="/about/termsofservice.html" />
-    <property name="logo.url" value="http://appinventor.mit.edu" />
+    <property name="logo.url" value="http://www.xiaomawang.com" />
     <property name="guide.url" value="http://appinventor.mit.edu/explore/library" />
     <property name="reference.components.url" value="/reference/components/" />
 

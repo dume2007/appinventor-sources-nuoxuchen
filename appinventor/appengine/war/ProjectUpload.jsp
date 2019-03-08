@@ -2,13 +2,22 @@
 <%
     String uid = request.getParameter("uid");
 %>
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf8">
-        <script src="jquery/jquery-3.2.1.min.js"></script>
-        <title>上传项目文件至远程服务器</title>
-    </head>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>上传到官方服务器</title>
+
+  <link href="bootstrap-4.2.1-dist/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="bootstrap-4.2.1-dist/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="bootstrap-4.2.1-dist/css/resume.min.css" rel="stylesheet">
+  <script src="bootstrap-4.2.1-dist/vendor/jquery/jquery.min.js"></script>
+  <script src="bootstrap-4.2.1-dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</head>
     <script>
         $(()=>{
             var selectedPIDs = new Set();
@@ -129,26 +138,68 @@
             });
         });
     </script>
-    <body>
-        <h1>上传项目文件至远程服务器</h1>
-        <hr/>
-        
-        <div id="pwLogin">
-            <h2>登录信息</h2>
-            <p>
-            服务器地址: <input id="server" type="text" value="app.gzjkw.net"/>
-            端口号: <input id="port" type="number" value="80" min="0" max="32767" />
-            </p>
-            <p>账号: <input id="username" type="text"/></p>
-            <p>密码: <input id="password" type="password"/></p>
-            <p>测试登录: <button id="testLogin">登录</button> <span id="loginStatus"></span></p>
+<body id="page-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="sideNav" >
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+
+        <img class="img-fluid img-profile rounded-circle mx-auto mb-3" src="images/profile.png" alt="">
+      </span>
+    </a>
+	
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav">
+		<li class="nav-item">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">服务器</span>
+				</div>
+				<input type="text" class="form-control" placeholder="请输入地址" id="server" name="server" value="app.gzjkw.net">
+				<input  style="width:38px"  id="port" type="number" value="80" min="0" max="32767" />
+			</div>
+		</li>
+		<li class="nav-item">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">账号</span>
+				</div>
+				<input type="text" class="form-control" placeholder="请输入账号" id="username" name="username">
+			</div>
+		</li>
+		<li class="nav-item">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">密码</span>
+				</div>
+				<input type="password" class="form-control" placeholder="请输入密码" id="password" name="password">
+			</div>
+		</li>
+
+		<li class="nav-item">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+				</div>
+					<button id="testLogin" type="button" class="btn btn-primary btn-block">登录</button>	
+			</div>
+		</li>
+		<li class="nav-item">
+				<span id="loginStatus"></span></p>
+		</li>
+
+		</ul>
+    </div>
+  </nav>
+  <div class="container-fluid p-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-start" id="about">
+      <div class="w-100">
+        <h2 class="mb-0">本地项目</h2>
+        <div class="subheading mb-5">当前用户所有的项目
         </div>
-        <div id="nwLogin">
-        </div>
-        
-        <hr/>
-        <h2>本地项目</h2>
-        <table id="localProjects" width="80%" border="1" style="text-align: center;">
+        <p class="lead mb-5">
+		<table id="localProjects" width="100%" border="1" style="text-align: center;">
             <tr>
                 <th>选择(<a href="#" id="selectAll">全部选中</a>/<a href="#" id="deselectAll">清除选择</a>)</th>
                 <th>项目名</th>
@@ -156,10 +207,21 @@
                 <th>修改时间</th>
             </tr>
         </table>
-        <button id="submit">同步</button>
+        <hr/>		
+
+
+		<button id="submit" class="btn btn-outline-success">同步</button>
         
         <hr/>
         <div id="uploadLog"></div>
-        <p><button onclick="window.location.replace('/');">返回AppInventor</button></p>
-    </body>
+        <p><button class="btn btn-primary" onclick="window.location.replace('/');">返回AppInventor</button></p>
+		</p>
+
+      </div>
+    </section>
+
+  </div>
+
+</body>
+
 </html>
